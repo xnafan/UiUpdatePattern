@@ -55,7 +55,7 @@ namespace UiUpdatePattern.WinForm.DAL
         public IEnumerable<Customer> GetAll()
         {
             _lastCustomerIndex++;
-            Thread.Sleep(350 * _lastCustomerIndex);
+            Thread.Sleep(1000 + 350 * _lastCustomerIndex);
             return _customers.Where (customer => customer.Id <= _lastCustomerIndex);
         }
 

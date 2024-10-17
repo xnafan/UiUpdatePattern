@@ -8,17 +8,24 @@ public partial class MainForm : Form
     {
         InitializeComponent();
         _customerDAO = customerDAO;
-        _busyIndicator = new BusyControlAnimator(btnGetCustomers) { Animation =
-        new string[]  { "◐", "◓", "◑", "◒" } };
-    }
+        _busyIndicator = new BusyControlAnimator(btnGetCustomers, "Retrieving data...")
+        {
+            Animation =
+        //new string[]  { "◐", "◓", "◑", "◒" }
+        //new string[] { "◴", "◷", "◶", "◵" }
+        //new string[] { "▖", "▘", "▝", "▗" }
+        new string[] { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }
+        };
+        //};
+        }
     private async void BtnGetCustomers_Click(object sender, EventArgs e) => await GetCustomersAsync();
 
     private async Task GetCustomersAsync()
     {
         try
         {
-            btnGetCustomers.Enabled = false;
-            //_busyIndicator.SetBusy();
+            //btnGetCustomers.Enabled = false;
+            _busyIndicator.SetBusy();
             await GetAndLoadData();
         }
         catch (Exception ex)
@@ -27,8 +34,8 @@ public partial class MainForm : Form
         }
         finally
         {
-            btnGetCustomers.Enabled = true;
-            //_busyIndicator.SetIdle();
+            //btnGetCustomers.Enabled = true;
+            _busyIndicator.SetIdle();
         }
     }
 
