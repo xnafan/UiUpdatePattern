@@ -17,21 +17,25 @@ public partial class MainForm : Form
     {
         try
         {
-            _busyIndicator.SetBusy();
-            lstCustomers.Items.Clear();
-            var customers = await Task.Run(() => _customerDAO.GetAll().ToList());
-            customers.ForEach(customer => lstCustomers.Items.Add(customer));
+            btnGetCustomers.Enabled = false;
+            //_busyIndicator.SetBusy();
+            await GetAndLoadData();
         }
         catch (Exception ex)
         {
-            MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show($"An error occurred while loading data: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
         finally
         {
-            _busyIndicator.SetIdle();
+            btnGetCustomers.Enabled = true;
+            //_busyIndicator.SetIdle();
         }
     }
 
-    private void EnableButton() => btnGetCustomers.Enabled = true;
-    private void DisableButton() => btnGetCustomers.Enabled = false;
+    private async Task GetAndLoadData()
+    {
+        lstCustomers.Items.Clear();
+        var customers = await Task.Run(() => _customerDAO.GetAll().ToList());
+        customers.ForEach(customer => lstCustomers.Items.Add(customer));
+    }
 }
