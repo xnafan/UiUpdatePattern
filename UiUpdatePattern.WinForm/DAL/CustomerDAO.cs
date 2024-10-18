@@ -6,6 +6,13 @@ using System.Threading.Tasks;
 
 namespace UiUpdatePattern.WinForm.DAL;
 
+/// <summary>
+/// Data Access Object for Customer data
+/// This class is a stub with only the GetAll method implemented.
+/// An artificial delay is added to simulate a slow data source.
+/// For each new call to GetAll, the method returns one more customer from the list,
+/// to simulate a growing list of customers.
+/// </summary>
 public class CustomerDAO : ICustomerDAO
 {
     private static List<Customer> _customers = new List<Customer>() {
@@ -44,7 +51,7 @@ new Customer(25, "Yara Yenderson")
     public IEnumerable<Customer> GetAll()
     {
         _lastCustomerIndex++;
-        Thread.Sleep(1000 + 350 * _lastCustomerIndex);
+        Thread.Sleep(2000 + 350 * _lastCustomerIndex);
         return _customers.Where (customer => customer.Id <= _lastCustomerIndex);
     }
 }

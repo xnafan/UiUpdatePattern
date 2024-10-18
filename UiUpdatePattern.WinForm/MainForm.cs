@@ -27,20 +27,23 @@ public partial class MainForm : Form
     {
         try
         {
-            btnGetCustomers.Enabled = false;                // 1) disable update buton
-            btnGetCustomers.Text = "Retrieving data...";    // 2) display busy message
+            // 1 and 2 - sets the button to Enabled = false
+            // and changes the text to "Retrieving data..."
+            _busyIndicator.SetBusy(); 
             await GetAndLoadData();                         // 3) perform update in try-catch
         }
         catch (Exception ex)
         {
             // 4) in the catch, be ready to show an error message
-            MessageBox.Show($"An error occurred while loading data: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show($"An error occurred while loading data: {ex.Message}", 
+                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
         }
         finally
         {
             // 5) In the finally 
-            btnGetCustomers.Enabled = true; // re-enable the update button 
-            btnGetCustomers.Text = "&Get Customers";    //remove the busy indicator
+            // sets the button back to Enabled and restores the original text
+            _busyIndicator.SetIdle(); 
         }
     }
 
