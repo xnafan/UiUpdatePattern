@@ -1,9 +1,10 @@
-# UI Updater Pattern
-This repository show how to implement an asynchronous loading of data, as simple as possible.
+# UI Update Pattern
+This repository shows how to implement an asynchronous update as simple as possible. In this case, loading data.
+This code sample uses Windows Forms for the UI, but the basic pattern can be used in any UI (web/console, etc).
 
 ![UiUpdaterPattern](https://github.com/user-attachments/assets/f8dbf9cd-d8ed-4bc5-8a04-ff74f6497264)
 
-The sample uses Windows Forms, but the basic pattern can be used in any paradigm.
+## Basic pattern
 When the update button (or any other UI control which initiates the async update) is activated:
 1. Disable update button (to avoid reactivation while performing update)
 2. Display a busy indicator (even just a "Working..." text in a statusbar/label/window titlebar)
@@ -42,20 +43,21 @@ The main method of the windows form shows the
     }
 ```
 ## BusyControlAnimator - helper class for animating text on controls
-The BusyControlAnimator is used to toggle busy/idle status for a control, and displays an animated busy-indicator using text on the control, while it is busy.
+The [BusyControlAnimator](https://github.com/xnafan/UiUpdatePattern/blob/master/UiUpdatePattern.WinForm/BusyControlAnimator.cs) is used to toggle busy/idle status for a control, and displays an animated busy-indicator using text on the control, while it is busy.
+This simplifies the pattern into fewer lines of code, and adds a busy indicator in any control with a text, to avoid having to implment extra UI components for this functionality.
 
 ### Usage
-You pass the control you want to be able to toggle busy/idle status for to the constructor of the  BusyControlAnimator class:
+You pass the control you want to be able to toggle busy/idle status for to the constructor of the BusyControlAnimator class:
 ```C#
 BusyControlAnimator _busyIndicator = new BusyControlAnimator(btnGetCustomers);
 ```
-When you want to set the busy/idle status of the control, you call
+When you want to set the busy/idle status of the control, you call one of the two following methods:
 
 - SetBusy() - sets the control's Enabled property to false, and starts the busy-animation
 - SetIdle() - sets the control's Enabled property to true, and stops the busy-animation
   
 ### Configurable elements
-In the constructor you can pass 
+In the constructor of the BusyControlAnimator you can pass 
 - the text to display to signal "Busy" (default: "Working on it")
 - the delay between animation updates (default: 150 ms)
 If you want another animation, you can set the Animation property on the BusyControlAnimator (default:  { "◐", "◓", "◑", "◒" })  
@@ -65,6 +67,7 @@ Suggestions are:
 -  { "▖", "▘", "▝", "▗" }   //square
 
 ## Code sample - using the BusyControlAnimator
+Taken from the [sample windows form](https://github.com/xnafan/UiUpdatePattern/blob/2f2bf191ecee559bb2473c4ea4d5ea136aa47431/UiUpdatePattern.WinForm/MainForm.cs#L26):
 ```C#
     private async Task GetCustomersAsync()
     {
