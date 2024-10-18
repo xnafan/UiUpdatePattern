@@ -11,12 +11,11 @@ public partial class MainForm : Form
         _customerDAO = customerDAO;
         _busyIndicator = new BusyControlAnimator(btnGetCustomers, "Retrieving data...")
         {
-            Animation = new string[] { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }
+            Animation = new string[] { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" } //snake
 
             //ALTERNATIVE ANIMATION STYLES
-            //Animation = new string[]  { "◐", "◓", "◑", "◒" }
-            //Animation = new string[] { "◴", "◷", "◶", "◵" }
-            //Animation = new string[] { "▖", "▘", "▝", "▗" }
+            //Animation = new string[] { "◴", "◷", "◶", "◵" }   //clock
+            //Animation = new string[] { "▖", "▘", "▝", "▗" }   //square
 
         };
 
@@ -28,18 +27,20 @@ public partial class MainForm : Form
     {
         try
         {
-            _busyIndicator.SetBusy();
-            //simpler: btnGetCustomers.Enabled = false;
-            await GetAndLoadData();
+            btnGetCustomers.Enabled = false;                // 1) disable update buton
+            btnGetCustomers.Text = "Retrieving data...";    // 2) display busy message
+            await GetAndLoadData();                         // 3) perform update in try-catch
         }
         catch (Exception ex)
         {
+            // 4) in the catch, be ready to show an error message
             MessageBox.Show($"An error occurred while loading data: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
         finally
         {
-            _busyIndicator.SetIdle();
-            //simpler: btnGetCustomers.Enabled = true;
+            // 5) In the finally 
+            btnGetCustomers.Enabled = true; // re-enable the update button 
+            btnGetCustomers.Text = "&Get Customers";    //remove the busy indicator
         }
     }
 

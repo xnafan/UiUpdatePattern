@@ -1,4 +1,8 @@
 ﻿namespace UiUpdatePattern.WinForm;
+
+/// <summary>
+/// Helper class for animating text on controls, while the application is busy.
+/// </summary>
 public class BusyControlAnimator
 {
     #region Variables and properties
@@ -9,10 +13,21 @@ public class BusyControlAnimator
     private int index = 0;
     private Thread thread;
     private int _animationIntervalInMs;
+
+    /// <summary>
+    /// The animation characters to use. Default is a rotating circle, using the unicode characters "◐", "◓", "◑", "◒".
+    /// </summary>
     public string[] Animation { get; set; } = { "◐", "◓", "◑", "◒" };
     #endregion
-    
+
     #region Constructor
+
+    /// <summary>
+    /// Instantiates an object, which animates the text of a control, while the application is busy.
+    /// </summary>
+    /// <param name="control">The control to add textual busy indication to, when SetBusy() is called</param>
+    /// <param name="busyText">The text to show on the control, while it is busy. Default is "Working on it"</param>
+    /// <param name="animationIntervalInMs">The speed of the animation, defined by the interval between text updates. Default is 150 milliseconds</param>
     public BusyControlAnimator(Control control, string busyText = "Working on it", int animationIntervalInMs = 150)
     {
         _control = control;
