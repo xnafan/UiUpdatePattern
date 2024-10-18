@@ -51,7 +51,6 @@
             btnGetCustomers.TabIndex = 1;
             btnGetCustomers.Text = "&Get customers";
             btnGetCustomers.UseVisualStyleBackColor = true;
-            btnGetCustomers.Click += BtnGetCustomers_Click;
             // 
             // MainForm
             // 

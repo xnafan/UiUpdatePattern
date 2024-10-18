@@ -2,6 +2,7 @@
 namespace UiUpdatePattern.WinForm;
 public partial class MainForm : Form
 {
+    #region variables and constructor
     private ICustomerDAO _customerDAO;
     private BusyControlAnimator _busyIndicator;
     public MainForm(ICustomerDAO customerDAO)
@@ -10,22 +11,25 @@ public partial class MainForm : Form
         _customerDAO = customerDAO;
         _busyIndicator = new BusyControlAnimator(btnGetCustomers, "Retrieving data...")
         {
-            Animation =
-        //new string[]  { "◐", "◓", "◑", "◒" }
-        //new string[] { "◴", "◷", "◶", "◵" }
-        //new string[] { "▖", "▘", "▝", "▗" }
-        new string[] { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }
+            Animation = new string[] { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }
+
+            //ALTERNATIVE ANIMATION STYLES
+            //Animation = new string[]  { "◐", "◓", "◑", "◒" }
+            //Animation = new string[] { "◴", "◷", "◶", "◵" }
+            //Animation = new string[] { "▖", "▘", "▝", "▗" }
+
         };
-        //};
-        }
-    private async void BtnGetCustomers_Click(object sender, EventArgs e) => await GetCustomersAsync();
+
+        btnGetCustomers.Click += async (_,_) => await GetCustomersAsync();
+    } 
+    #endregion
 
     private async Task GetCustomersAsync()
     {
         try
         {
-            //btnGetCustomers.Enabled = false;
             _busyIndicator.SetBusy();
+            //simpler: btnGetCustomers.Enabled = false;
             await GetAndLoadData();
         }
         catch (Exception ex)
@@ -34,8 +38,8 @@ public partial class MainForm : Form
         }
         finally
         {
-            //btnGetCustomers.Enabled = true;
             _busyIndicator.SetIdle();
+            //simpler: btnGetCustomers.Enabled = true;
         }
     }
 
