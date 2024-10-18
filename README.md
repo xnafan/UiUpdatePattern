@@ -44,7 +44,7 @@ Here is an example of the pattern in practice:
 ```
 ## BusyControlAnimator - helper class for animating text on controls
 The [BusyControlAnimator](https://github.com/xnafan/UiUpdatePattern/blob/master/UiUpdatePattern.WinForm/BusyControlAnimator.cs) is used to toggle busy/idle status for a control, and displays an animated busy-indicator using text on the control, while it is busy.
-This simplifies the pattern into fewer lines of code, and adds a busy indicator in any control with a text, to avoid having to implment extra UI components for this functionality.
+This simplifies the pattern into fewer lines of code, and adds a busy indicator in any Windows Forms control with a Text property, to avoid having to add extra UI components to your UI for this functionality.
 
 ### Usage
 You pass the control you want to be able to toggle busy/idle status for to the constructor of the BusyControlAnimator class:
