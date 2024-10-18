@@ -30,7 +30,8 @@ The main method of the windows form shows the
         catch (Exception ex)
         {
             // 4) in the catch, be ready to show an error message
-            MessageBox.Show($"An error occurred while loading data: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show($"An error occurred while loading data: {ex.Message}",
+                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
         finally
         {
@@ -55,5 +56,37 @@ When you want to set the busy/idle status of the control, you call
   
 ### Configurable elements
 In the constructor you can pass 
-- the text to display to signal "Busy". (default: "Working on it")
+- the text to display to signal "Busy" (default: "Working on it")
 - the delay between animation updates (default: 150 ms)
+If you want another animation, you can set the Animation property on the BusyControlAnimator (default:  { "◐", "◓", "◑", "◒" })  
+Suggestions are:
+ - { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" } //snake
+-  { "◴", "◷", "◶", "◵" }   //clock
+-  { "▖", "▘", "▝", "▗" }   //square
+
+## Code sample - using the BusyControlAnimator
+```C#
+    private async Task GetCustomersAsync()
+    {
+        try
+        {
+            // 1 and 2 - sets the button to Enabled = false
+            // and changes the text to "Retrieving data..."
+            _busyIndicator.SetBusy(); 
+            await GetAndLoadData();                         // 3) perform update in try-catch
+        }
+        catch (Exception ex)
+        {
+            // 4) in the catch, be ready to show an error message
+            MessageBox.Show($"An error occurred while loading data: {ex.Message}", 
+                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+        }
+        finally
+        {
+            // 5) In the finally 
+            // sets the button back to Enabled and restores the original text
+            _busyIndicator.SetIdle(); 
+        }
+    }
+```
