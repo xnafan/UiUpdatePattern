@@ -83,7 +83,6 @@ Taken from the [sample windows form](https://github.com/xnafan/UiUpdatePattern/b
             // 4) in the catch, be ready to show an error message
             MessageBox.Show($"An error occurred while loading data: {ex.Message}", 
                 "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
         }
         finally
         {
