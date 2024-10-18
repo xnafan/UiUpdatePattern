@@ -17,7 +17,7 @@ When the update button (or any other UI control which initiates the async update
 # Key elements
 
 ## Basic update structure in C#
-The main method of the windows form shows the pattern in practice:
+Here is an example of the pattern in practice:
 
 ```C#
     private async Task GetCustomersAsync()
